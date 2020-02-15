@@ -99,8 +99,8 @@ def get_username():
     return username
 
 
-def start(username=None):
-    username = get_username()
+def start(entered_username=None):
+    username = entered_username
     url = "http://www.twitter.com/" + username
     print("\nDownloading tweets for " + username)
     response = None
@@ -123,6 +123,3 @@ def start(username=None):
     tweets = get_tweets_data(username, soup)
     test_data(username, tweets, masterTList)
     print(masterTList)
-
-
-start()

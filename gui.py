@@ -1,7 +1,8 @@
 import tkinter as tk
 from tkinter import *
+from tkinter.ttk import *
 from PIL import Image, ImageTk
-import os
+import TwitterBS
 
 # Creates the GUI
 root = tk.Tk()
@@ -42,7 +43,7 @@ usernameField.grid(row=2, column=1)
 # usernameField.pack()
 
 openFile = tk.Button(search_frame, text="Search", padx=10,
-                     pady=5, fg="#4CA3DD", bg="red")
+                     pady=5, fg="#4CA3DD", bg="red", command=lambda: TwitterBS.start(usernameField.get()))
 openFile.grid(row=3, column=0, columnspan=2)
 
 
@@ -53,11 +54,16 @@ openFile.grid(row=3, column=0, columnspan=2)
 blank_data = tk.Frame(canvas, bg="white")
 blank_data.place(relwidth=0.9, relheight=0.7, relx=0.05, rely=0.25)
 
+progress_data = tk.Frame(blank_data, bg="white")
+progress_data.place(relwidth=0.5, relx=0.3)
+
 
 """
     Progress Bar
 """
-# progress_bar = tk.Progressbar()
+progress_bar = Progressbar(progress_data, orient="horizontal", length=400)
+progress_bar.grid(column=0, row=0, pady=10)
+
 
 
 # Runs the GUI
