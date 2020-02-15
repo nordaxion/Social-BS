@@ -1,5 +1,5 @@
 from bs4 import BeautifulSoup
-from profanity_filter import ProfanityFilter
+from profanityfilter import ProfanityFilter
 import requests
 import sys
 import json
@@ -111,7 +111,7 @@ def start(username=None):
         sys.exit(1)
 
     if response.status_code != 200:
-        print("Non success status code returned "+str(response.status_code))
+        print("Non success status code returned "+ str(response.status_code))
         sys.exit(1)
 
     soup = BeautifulSoup(response.text, 'lxml')
