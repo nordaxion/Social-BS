@@ -29,7 +29,7 @@ def get_tweet_text(tweet):
 def get_this_page_tweets(soup):
     tweets_list = list()
     tweets = soup.find_all("li", {"data-item-type": "tweet"})
-    for tweet in tweets:
+    for tweet in tweets[:30]:
         tweet_data = None
         try:
             tweet_data = get_tweet_text(tweet)
