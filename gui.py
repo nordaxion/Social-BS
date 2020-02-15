@@ -2,13 +2,10 @@ import tkinter as tk
 from tkinter import *
 from tkinter.ttk import *
 from PIL import Image, ImageTk
-<<<<<<< HEAD
-=======
 import requests
 from bs4 import BeautifulSoup
 from profanityfilter import ProfanityFilter
 import TwitterBS
->>>>>>> 2d52b4fc78c3773fd35de4282fe9af9b6134f807
 
 # Creates the GUI
 root = tk.Tk()
@@ -48,9 +45,7 @@ usernameLabel.grid(row=2, column=0)
 usernameField.grid(row=2, column=1)
 # usernameField.pack()
 
-openFile = tk.Button(search_frame, text="Search", padx=10,
-<<<<<<< HEAD
-'''                     pady=5, fg="#4CA3DD", bg="red", COMMAND= openFileCallback)
+''' pady=5, fg="#4CA3DD", bg="red", COMMAND= openFileCallback)
 openFile.grid(row=3, column=0, columnspan=2)
 
 def openFileCallback():
@@ -64,11 +59,10 @@ def openFileCallback():
 
 '''
 
-=======
-                     pady=5, fg="#4CA3DD", bg="red", command=lambda: start(usernameField.get()))
+openFile = tk.Button(search_frame, text="Search", padx=10, pady=5, fg="#4CA3DD", bg="red", command=lambda: start(usernameField.get()))
 openFile.grid(row=3, column=0, columnspan=2)
 
->>>>>>> 2d52b4fc78c3773fd35de4282fe9af9b6134f807
+
 """
     Data Section
 """

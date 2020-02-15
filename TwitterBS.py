@@ -97,10 +97,8 @@ def get_username():
         usage()
 
     return username
-
-
-<<<<<<< HEAD
-'''def start(username=None):
+'''
+def start(username=None):
     username = get_username()
     url = "http://www.twitter.com/" + username
     print("\nDownloading tweets for " + username)
@@ -118,7 +116,7 @@ def get_username():
     soup = BeautifulSoup(response.text, 'lxml')
 
     if soup.find("div", {"class": "errorpage-topbar"}):
-        print("\n\n Error: Invalid username.")
+        print("\n Error: Invalid username.")
         sys.exit(1)
     masterTList = []
     tweets = get_tweets_data(username, soup)
@@ -129,7 +127,7 @@ def get_username():
 
 profPercent = 0
 start()'''
-=======
+
 # def start(entered_username=None):
 #     username = entered_username
 #     url = "http://www.twitter.com/" + username
@@ -154,4 +152,3 @@ start()'''
 #     tweets = get_tweets_data(username, soup)
 #     test_data(username, tweets, masterTList)
 #     print(masterTList)
->>>>>>> 2d52b4fc78c3773fd35de4282fe9af9b6134f807
