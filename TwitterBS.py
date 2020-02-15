@@ -97,7 +97,7 @@ def get_username():
         usage()
 
     return username
-'''
+
 def start(username=None):
     username = get_username()
     url = "http://www.twitter.com/" + username
@@ -126,7 +126,7 @@ def start(username=None):
     print(masterTList)
 
 profPercent = 0
-start()'''
+start()
 
 # def start(entered_username=None):
 #     username = entered_username
