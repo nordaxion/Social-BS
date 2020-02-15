@@ -56,8 +56,8 @@ openFile.grid(row=3, column=0, columnspan=2)
 blank_data = tk.Frame(canvas, bg="white")
 blank_data.place(relwidth=0.9, relheight=0.7, relx=0.05, rely=0.25)
 
-progress_data = tk.Frame(blank_data, bg="white")
-progress_data.place(relwidth=0.5, relx=0.3)
+# blank_data = tk.Frame(blank_data, bg="white")
+# blank_data.place(relwidth=0.5, relx=0.3)
 
 """
     Progress Bar
@@ -71,14 +71,10 @@ def start(entered_username=None):
     username = entered_username
     url = "http://www.twitter.com/" + username
 
-    for widget in progress_data.winfo_children():
+    for widget in blank_data.winfo_children():
         widget.destroy()
 
-    empty_search3 = tk.Label(progress_data)
-    empty_search4 = tk.Label(progress_data)
-    download_tweets = tk.Label(progress_data, bg="white", text=f"Downloading tweets for {username}")
-    empty_search3.pack()
-    empty_search4.pack()
+    download_tweets = tk.Label(blank_data, bg="white", text=f"Downloading tweets for {username}")
     download_tweets.place(relwidth=0.9, relheight=0.7, relx=0.05, rely=0.25)
 
     print("\nDownloading tweets for " + username)
@@ -104,14 +100,14 @@ def start(entered_username=None):
     print(masterTList)
     profPercent = len(masterTList) / len(tweets) * 100
 
-    percent = tk.Label(progress_data, text=f"This user has a {profPercent}% of being potentially offensive")
+    percent = tk.Label(blank_data, text=f"This user has a {profPercent}% of being potentially offensive")
     percent.pack()
 
-    empty_search5 = tk.Label(progress_data)
+    empty_search5 = tk.Label(blank_data)
     empty_search5.pack()
 
     for profTweets in masterTList:
-        tweet = tk.Label(progress_data, text=profTweets)
+        tweet = tk.Label(blank_data, text=profTweets)
         tweet.pack()
 
 
