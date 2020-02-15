@@ -2,6 +2,9 @@ import tkinter as tk
 from tkinter import *
 from tkinter.ttk import *
 from PIL import Image, ImageTk
+import requests
+from bs4 import BeautifulSoup
+from profanityfilter import ProfanityFilter
 import TwitterBS
 
 # Creates the GUI
@@ -43,9 +46,8 @@ usernameField.grid(row=2, column=1)
 # usernameField.pack()
 
 openFile = tk.Button(search_frame, text="Search", padx=10,
-                     pady=5, fg="#4CA3DD", bg="red", command=lambda: TwitterBS.start(usernameField.get()))
+                     pady=5, fg="#4CA3DD", bg="red", command=lambda: start(usernameField.get()))
 openFile.grid(row=3, column=0, columnspan=2)
-
 
 """
     Data Section
@@ -57,13 +59,42 @@ blank_data.place(relwidth=0.9, relheight=0.7, relx=0.05, rely=0.25)
 progress_data = tk.Frame(blank_data, bg="white")
 progress_data.place(relwidth=0.5, relx=0.3)
 
-
 """
     Progress Bar
 """
-progress_bar = Progressbar(progress_data, orient="horizontal", length=400)
-progress_bar.grid(column=0, row=0, pady=10)
 
+
+# progress_bar = Progressbar(progress_data, orient="horizontal", length=400)
+# progress_bar.grid(column=0, row=0, pady=10)
+
+def start(entered_username=None):
+    username = entered_username
+    url = "http://www.twitter.com/" + username
+
+    download_tweets = tk.Label(progress_data, bg="white", text=f"Downloading tweets for {username}")
+    download_tweets.place(relwidth=0.9, relheight=0.7, relx=0.05, rely=0.25)
+
+    print("\nDownloading tweets for " + username)
+    response = None
+    try:
+        response = requests.get(url)
+    except Exception as e:
+        print(repr(e))
+        sys.exit(1)
+
+    if response.status_code != 200:
+        print("Non success status code returned " + str(response.status_code))
+        sys.exit(1)
+
+    soup = BeautifulSoup(response.text, 'lxml')
+
+    if soup.find("div", {"class": "errorpage-topbar"}):
+        print("\n\n Error: Invalid username.")
+        sys.exit(1)
+    masterTList = []
+    tweets = TwitterBS.get_tweets_data(username, soup)
+    TwitterBS.test_data(username, tweets, masterTList)
+    print(masterTList)
 
 
 # Runs the GUI
