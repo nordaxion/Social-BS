@@ -43,6 +43,7 @@ usernameLabel.grid(row=1, column=0)
 usernameField.grid(row=1, column=1)
 # usernameField.pack()
 
+# Button
 openFile = tk.Button(blank_search, text="Search", padx=10, pady=5, fg="#4CA3DD", bg="red",
                      command=lambda: start(usernameField.get()))
 openFile.grid(row=2, column=0, columnspan=2)
