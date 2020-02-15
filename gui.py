@@ -8,10 +8,10 @@ root = tk.Tk()
 
 # Title and Icon
 root.title("SocialBS")
-root.iconbitmap("images/icon.ico")
+root.iconbitmap("images/icont_.ico")
 
 # Creates the logo at the top of the GUI
-logo = ImageTk.PhotoImage(Image.open("images/logo_script_75.jpeg"))
+logo = ImageTk.PhotoImage(Image.open("images/logo_script_75.png"))
 logo_label = tk.Label(root, image=logo)
 logo_label.pack()
 
@@ -57,7 +57,7 @@ blank_data.place(relwidth=0.9, relheight=0.7, relx=0.05, rely=0.25)
 """
     Progress Bar
 """
-progress_bar = tk.Progressbar()
+# progress_bar = tk.Progressbar()
 
 
 # Runs the GUI
