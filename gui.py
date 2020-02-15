@@ -6,6 +6,7 @@ import requests
 from bs4 import BeautifulSoup
 from profanityfilter import ProfanityFilter
 import TwitterBS
+from time import sleep
 
 # Creates the GUI
 root = tk.Tk()
@@ -69,7 +70,12 @@ blank_data.place(relwidth=0.9, relheight=0.7, relx=0.05, rely=0.25)
 # progress_bar.grid(column=0, row=0, pady=10)
 
 def start(entered_username=None):
-    username = entered_username
+    loading_label = tk.Label(blank_data, text="Please wait... system processing. Give me a moment.")
+    loading_label.pack()
+
+    sleep(1.5)
+
+    username = entered_username.strip(" ")
     url = "http://www.twitter.com/" + username
     empty_search5 = tk.Label(blank_data)
 
@@ -87,42 +93,48 @@ def start(entered_username=None):
             response = requests.get(url)
         except Exception as e:
             print(repr(e))
-            sys.exit(1)
+            return
 
         if response.status_code != 200:
+            alert_message = tk.Label(blank_data, text="Please enter a valid username")
+            alert_message.pack()
             print("Non success status code returned " + str(response.status_code))
-            sys.exit(1)
+            return
 
-        soup = BeautifulSoup(response.text, 'lxml')
+        else:
+            soup = BeautifulSoup(response.text, 'lxml')
 
-        if soup.find("div", {"class": "errorpage-topbar"}):
-            print("\n\n Error: Invalid username.")
-            sys.exit(1)
-        masterTList = []
-        tweets = TwitterBS.get_tweets_data(username, soup)
-        TwitterBS.test_data(username, tweets, masterTList)
-        print(masterTList)
-        profPercent = len(masterTList) / len(tweets) * 100
+            if soup.find("div", {"class": "errorpage-topbar"}):
+                print("\n\n Error: Invalid username.")
+                sys.exit(1)
+            masterTList = []
+            tweets = TwitterBS.get_tweets_data(username, soup)
+            TwitterBS.test_data(username, tweets, masterTList)
+            print(masterTList)
+            profPercent = len(masterTList) / len(tweets) * 100
 
-        if profPercent >= 100:
-            profPercent = 99.99
+            if profPercent >= 100:
+                profPercent = 99.99
 
-        percent = tk.Label(blank_data, text=f"This user has a {profPercent:4.2f}% of being potentially offensive")
-        percent.pack()
+            for widget in blank_data.winfo_children():
+                widget.destroy()
 
-        empty_search5 = tk.Label(blank_data)
-        empty_search5.pack()
+            percent = tk.Label(blank_data, text=f"This user has a {profPercent:4.2f}% of being potentially offensive")
+            percent.pack()
 
-        tweet = Text(blank_data, wrap=WORD)
+            empty_search5 = tk.Label(blank_data)
+            empty_search5.pack()
 
-        for profTweets in masterTList:
-            tweet.insert(END, profTweets + "\n\n")
-            # tk.Text(blank_data, text=profTweets)
+            tweet = Text(blank_data, wrap=WORD)
 
-        tweet.config(state=DISABLED, font="Arial", width=90)
-        tweet.pack()
+            for profTweets in masterTList:
+                tweet.insert(END, profTweets + "\n\n")
+                # tk.Text(blank_data, text=profTweets)
 
-        print(masterTList)
+            tweet.config(state=DISABLED, font="Arial", width=90)
+            tweet.pack()
+
+            print(masterTList)
 
 
 # Runs the GUI
