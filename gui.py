@@ -31,23 +31,21 @@ blank_search = tk.Frame(canvas, bg="white")
 blank_search.place(relwidth=0.9, relheight=0.2, relx=0.05, rely=0.05)
 
 # Creates a search frame
-search_frame = tk.Frame(blank_search, bg="white")
-search_frame.place(relwidth=0.4, relheight=1, relx=0.3)
+blank_search = tk.Frame(blank_search, bg="white")
+blank_search.place(relwidth=0.4, relheight=1, relx=0.3)
 
 # Creates an input field in the frame
-empty_search1 = tk.Label(search_frame)
-empty_search2 = tk.Label(search_frame)
-usernameLabel = tk.Label(search_frame, text="Enter username")
-usernameField = Entry(search_frame, width=30)
+empty_search1 = tk.Label(blank_search)
+usernameLabel = tk.Label(blank_search, text="Enter username")
+usernameField = Entry(blank_search, width=30)
 empty_search1.grid(row=0)
-empty_search2.grid(row=1)
-usernameLabel.grid(row=2, column=0)
-usernameField.grid(row=2, column=1)
+usernameLabel.grid(row=1, column=0)
+usernameField.grid(row=1, column=1)
 # usernameField.pack()
 
-openFile = tk.Button(search_frame, text="Search", padx=10, pady=5, fg="#4CA3DD", bg="red",
+openFile = tk.Button(blank_search, text="Search", padx=10, pady=5, fg="#4CA3DD", bg="red",
                      command=lambda: start(usernameField.get()))
-openFile.grid(row=3, column=0, columnspan=2)
+openFile.grid(row=2, column=0, columnspan=2)
 
 """
     Data Section
@@ -73,9 +71,6 @@ def start(entered_username=None):
 
     for widget in blank_data.winfo_children():
         widget.destroy()
-
-    download_tweets = tk.Label(blank_data, bg="white", text=f"Downloading tweets for {username}")
-    download_tweets.place(relwidth=0.9, relheight=0.7, relx=0.05, rely=0.25)
 
     print("\nDownloading tweets for " + username)
     response = None
