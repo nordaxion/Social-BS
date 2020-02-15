@@ -122,7 +122,9 @@ def start(username=None):
     masterTList = []
     tweets = get_tweets_data(username, soup)
     test_data(username, tweets, masterTList)
+    
+    profPercent = len(masterTList)/len(tweets)
     print(masterTList)
 
-
-start()
+profPercent = 0
+'''start()'''

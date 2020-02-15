@@ -2,6 +2,8 @@ import tkinter as tk
 from tkinter import *
 from PIL import Image, ImageTk
 import os
+from TwitterBS import *
+from profanityfilter import ProfanityFilter
 
 # Creates the GUI
 root = tk.Tk()
@@ -42,8 +44,18 @@ usernameField.grid(row=2, column=1)
 # usernameField.pack()
 
 openFile = tk.Button(search_frame, text="Search", padx=10,
-                     pady=5, fg="#4CA3DD", bg="red")
+                     pady=5, fg="#4CA3DD", bg="red", COMMAND= openFileCallback)
 openFile.grid(row=3, column=0, columnspan=2)
+
+def openFileCallback():
+    openFile.destroy
+    empty_search1.destroy
+    empty_search2.destroy
+    usernameField.destroy
+    usernameField.destroy
+    usernameLabel = tk.Label(search_frame, text=profPercent + "%")
+    usernameLabel.grid(row=2, column=0)
+
 
 
 """
