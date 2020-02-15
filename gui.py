@@ -54,9 +54,8 @@ openFile.grid(row=2, column=0, columnspan=2)
 """
 
 blank_data = tk.Frame(canvas, bg="white")
-# Jed's Old Code blank_data.place(relwidth=0.9, relheight=0.7, relx=0.05, rely=0.25)
-blank_data.place(width=tk.Frame.winfo_screenwidth,
-                 height=tk.Frame.winfo_screenheight, anchor=CENTER)
+blank_data.place(relwidth=0.9, relheight=0.7, relx=0.05, rely=0.25)
+# blank_data.place(width=tk.Frame.winfo_screenwidth, height=tk.Frame.winfo_screenheight, anchor=CENTER)
 
 # blank_data = tk.Frame(blank_data, bg="white")
 # blank_data.place(relwidth=0.5, relx=0.3)
@@ -72,45 +71,58 @@ blank_data.place(width=tk.Frame.winfo_screenwidth,
 def start(entered_username=None):
     username = entered_username
     url = "http://www.twitter.com/" + username
+    empty_search5 = tk.Label(blank_data)
 
     for widget in blank_data.winfo_children():
         widget.destroy()
 
-    print("\nDownloading tweets for " + username)
-    response = None
-    try:
-        response = requests.get(url)
-    except Exception as e:
-        print(repr(e))
-        sys.exit(1)
+    if username == None:
+        empty_search5.pack()
+        message = tk.Label(blank_data, text="Please enter a username")
+        message.pack()
+    else:
+        print("\nDownloading tweets for " + username)
+        response = None
+        try:
+            response = requests.get(url)
+        except Exception as e:
+            print(repr(e))
+            sys.exit(1)
 
-    if response.status_code != 200:
-        print("Non success status code returned " + str(response.status_code))
-        sys.exit(1)
+        if response.status_code != 200:
+            print("Non success status code returned " + str(response.status_code))
+            sys.exit(1)
 
-    soup = BeautifulSoup(response.text, 'lxml')
+        soup = BeautifulSoup(response.text, 'lxml')
 
-    if soup.find("div", {"class": "errorpage-topbar"}):
-        print("\n\n Error: Invalid username.")
-        sys.exit(1)
-    masterTList = []
-    tweets = TwitterBS.get_tweets_data(username, soup)
-    TwitterBS.test_data(username, tweets, masterTList)
-    print(masterTList)
-    profPercent = len(masterTList) / len(tweets) * 100
+        if soup.find("div", {"class": "errorpage-topbar"}):
+            print("\n\n Error: Invalid username.")
+            sys.exit(1)
+        masterTList = []
+        tweets = TwitterBS.get_tweets_data(username, soup)
+        TwitterBS.test_data(username, tweets, masterTList)
+        print(masterTList)
+        profPercent = len(masterTList) / len(tweets) * 100
 
-    percent = tk.Label(
-        blank_data, text=f"This user has a {profPercent}% of being potentially offensive")
-    percent.pack()
+        if profPercent >= 100:
+            profPercent = 99.99
 
-    empty_search5 = tk.Label(blank_data)
-    empty_search5.pack()
+        percent = tk.Label(blank_data, text=f"This user has a {profPercent:4.2f}% of being potentially offensive")
+        percent.pack()
 
-    for profTweets in masterTList:
-        tweet = tk.Label(blank_data, text=profTweets)
+        empty_search5 = tk.Label(blank_data)
+        empty_search5.pack()
+
+        tweet = Text(blank_data, wrap=WORD)
+
+        for profTweets in masterTList:
+            tweet.insert(END, profTweets + "\n\n")
+            # tk.Text(blank_data, text=profTweets)
+
+        tweet.config(state=DISABLED, font="Arial", width=90)
         tweet.pack()
 
-    print(masterTList)
+        print(masterTList)
 
 
 # Runs the GUI
