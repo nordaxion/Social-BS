@@ -57,7 +57,7 @@ blank_data.place(relwidth=0.9, relheight=0.7, relx=0.05, rely=0.25)
 """
     Progress Bar
 """
-progress_bar = tk.Progressbar()
+# progress_bar = tk.Progressbar()
 
 
 # Runs the GUI
