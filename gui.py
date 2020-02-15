@@ -35,26 +35,29 @@ empty_search1 = tk.Label(search_frame)
 empty_search2 = tk.Label(search_frame)
 usernameLabel = tk.Label(search_frame, text="Enter username")
 usernameField = Entry(search_frame, width=30)
+empty_search1.grid(row=0)
+empty_search2.grid(row=1)
 usernameLabel.grid(row=2, column=0)
 usernameField.grid(row=2, column=1)
 # usernameField.pack()
 
 openFile = tk.Button(search_frame, text="Search", padx=10,
                      pady=5, fg="#4CA3DD", bg="red")
-openFile.grid(row=2, column=0, columnspan=2)
+openFile.grid(row=3, column=0, columnspan=2)
 
 
 """
     Data Section
 """
 
-# blank_data = tk.Frame(canvas, bg="white")
-
-# blank_data.place(relwidth=0.9, relheight=0.8, relx=0.05, rely=0.15)
-
+blank_data = tk.Frame(canvas, bg="white")
+blank_data.place(relwidth=0.9, relheight=0.7, relx=0.05, rely=0.25)
 
 
-
+"""
+    Progress Bar
+"""
+progress_bar = tk.Progressbar()
 
 
 # Runs the GUI
