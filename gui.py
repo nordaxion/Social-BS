@@ -2,13 +2,10 @@ import tkinter as tk
 from tkinter import *
 from tkinter.ttk import *
 from PIL import Image, ImageTk
-<<<<<<< HEAD
-=======
 import requests
 from bs4 import BeautifulSoup
 from profanityfilter import ProfanityFilter
 import TwitterBS
->>>>>>> 2d52b4fc78c3773fd35de4282fe9af9b6134f807
 
 # Creates the GUI
 root = tk.Tk()
@@ -48,8 +45,6 @@ usernameLabel.grid(row=2, column=0)
 usernameField.grid(row=2, column=1)
 # usernameField.pack()
 
-openFile = tk.Button(search_frame, text="Search", padx=10,
-<<<<<<< HEAD
 '''                     pady=5, fg="#4CA3DD", bg="red", COMMAND= openFileCallback)
 openFile.grid(row=3, column=0, columnspan=2)
 
@@ -63,12 +58,10 @@ def openFileCallback():
     usernameLabel.grid(row=2, column=0)
 
 '''
-
-=======
-                     pady=5, fg="#4CA3DD", bg="red", command=lambda: start(usernameField.get()))
+openFile = tk.Button(search_frame, text="Search", padx=10, pady=5, fg="#4CA3DD", bg="red",
+                     command=lambda: start(usernameField.get()))
 openFile.grid(row=3, column=0, columnspan=2)
 
->>>>>>> 2d52b4fc78c3773fd35de4282fe9af9b6134f807
 """
     Data Section
 """
@@ -91,7 +84,14 @@ def start(entered_username=None):
     username = entered_username
     url = "http://www.twitter.com/" + username
 
+    for widget in progress_data.winfo_children():
+        widget.destroy()
+
+    empty_search3 = tk.Label(progress_data)
+    empty_search4 = tk.Label(progress_data)
     download_tweets = tk.Label(progress_data, bg="white", text=f"Downloading tweets for {username}")
+    empty_search3.pack()
+    empty_search4.pack()
     download_tweets.place(relwidth=0.9, relheight=0.7, relx=0.05, rely=0.25)
 
     print("\nDownloading tweets for " + username)
@@ -114,6 +114,20 @@ def start(entered_username=None):
     masterTList = []
     tweets = TwitterBS.get_tweets_data(username, soup)
     TwitterBS.test_data(username, tweets, masterTList)
+    print(masterTList)
+    profPercent = len(masterTList) / len(tweets) * 100
+
+    percent = tk.Label(progress_data, text=f"This user has a {profPercent}% of being potentially offensive")
+    percent.pack()
+
+    empty_search5 = tk.Label(progress_data)
+    empty_search5.pack()
+
+    for profTweets in masterTList:
+        tweet = tk.Label(progress_data, text=profTweets)
+        tweet.pack()
+
+
     print(masterTList)
 
 
