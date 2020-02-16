@@ -7,6 +7,7 @@ from bs4 import BeautifulSoup
 from profanityfilter import ProfanityFilter
 import TwitterBS
 from time import sleep
+import os
 
 # Creates the GUI
 root = tk.Tk()
@@ -69,23 +70,28 @@ blank_data.place(relwidth=0.9, relheight=0.7, relx=0.05, rely=0.25)
 # progress_bar = Progressbar(progress_data, orient="horizontal", length=400)
 # progress_bar.grid(column=0, row=0, pady=10)
 
-def start(entered_username=None):
+def start(entered_username=""):
+    openFile.config(state=DISABLED)
+
     loading_label = tk.Label(blank_data, text="Please wait... system processing. Give me a moment.")
     loading_label.pack()
 
-    sleep(1.5)
+    sleep(3)
 
     username = entered_username.strip(" ")
     url = "http://www.twitter.com/" + username
-    empty_search5 = tk.Label(blank_data)
+
 
     for widget in blank_data.winfo_children():
         widget.destroy()
 
-    if username == None:
+    if username == "":
+        empty_search5 = tk.Label(blank_data)
         empty_search5.pack()
         message = tk.Label(blank_data, text="Please enter a username")
         message.pack()
+        openFile.config(state=NORMAL)
+
     else:
         print("\nDownloading tweets for " + username)
         response = None
@@ -98,8 +104,9 @@ def start(entered_username=None):
         if response.status_code != 200:
             alert_message = tk.Label(blank_data, text="Please enter a valid username")
             alert_message.pack()
+            usernameField.delete(0, "end")
             print("Non success status code returned " + str(response.status_code))
-            return
+            openFile.config(state=NORMAL)
 
         else:
             soup = BeautifulSoup(response.text, 'lxml')
@@ -133,6 +140,8 @@ def start(entered_username=None):
 
             tweet.config(state=DISABLED, font="Arial", width=90)
             tweet.pack()
+
+            openFile.config(state=NORMAL)
 
             print(masterTList)
 
